@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Computer Graphics Project Top Charts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      color: #e5e7eb;
+      background-color: #0f172a;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    header p {
+      margin-top: 0.7rem;
+      font-size: 0.95rem;
+      color: #9ca3af;
+    }
+
+    .quarter-section {
+      margin-bottom: 3rem;
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 1.25rem;
+      padding: 1.5rem 1.75rem 2rem;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.65);
+    }
+
+    .quarter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid rgba(55, 65, 81, 0.8);
+      padding-bottom: 0.75rem;
+    }
+
+    .quarter-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .quarter-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .project-card {
+      background: #020617;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .project-thumb {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-rank {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+    }
+
+    .project-body {
+      padding: 0.9rem 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.35rem;
+    }
+
+    /* OPTIONAL PROJECT TITLE */
+    .project-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    /* BOLD AUTHOR NAME */
+    .project-author {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    .project-actions {
+      margin-top: 0.6rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      text-decoration: none;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #38bdf8;
+      color: #e0f2fe;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .loading,
+    .error {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <h1>Computer Graphics Project Top Charts</h1>
+      <p>Top 5 projects from CSC 471 each quarter.</p>
+    </header>
+
+    <div id="status" class="loading">Loading project data…</div>
+    <div id="quarters"></div>
+
+    <footer>
+      &copy; 2025 — Computer Graphics Project Top Charts
+    </footer>
+  </div>
+
+  <script>
+    function parseCSV(text) {
+      const lines = text.trim().split(/\r?\n/);
+      const headers = lines[0].split(",").map(h => h.trim());
+      return lines.slice(1).map(line => {
+        const cols = line.split(",").map(c => c.trim());
+        const row = {};
+        headers.forEach((h, i) => row[h] = cols[i] || "");
+        return row;
+      });
+    }
+
+    function renderQuarters(projects) {
+      const container = document.getElementById("quarters");
+      const status = document.getElementById("status");
+      status.textContent = "";
+
+      const groups = {};
+      projects.forEach(p => {
+        const heading = `${p.course_code} ${p.course_name} — ${p.term} ${p.year}`;
+        if (!groups[heading]) groups[heading] = [];
+        groups[heading].push(p);
+      });
+
+      Object.keys(groups).sort().forEach(heading => {
+        const section = document.createElement("section");
+        section.className = "quarter-section";
+
+        const headerDiv = document.createElement("div");
+        headerDiv.className = "quarter-header";
+
+        const titleDiv = document.createElement("div");
+        titleDiv.className = "quarter-title";
+        titleDiv.textContent = heading;
+
+        const labelDiv = document.createElement("div");
+        labelDiv.className = "quarter-label";
+        labelDiv.textContent = "Top 5 Projects";
+
+        headerDiv.appendChild(titleDiv);
+        headerDiv.appendChild(labelDiv);
+        section.appendChild(headerDiv);
+
+        const grid = document.createElement("div");
+        grid.className = "projects-grid";
+
+        const sorted = groups[heading]
+          .slice()
+          .sort((a, b) => Number(a.rank) - Number(b.rank))
+          .slice(0, 5);
+
+        sorted.forEach(project => {
+          const card = document.createElement("article");
+          card.className = "project-card";
+
+          const thumb = document.createElement("div");
+          thumb.className = "project-thumb";
+
+          const img = document.createElement("img");
+          img.src = project.thumbnail || "placeholder.jpg";
+          img.alt = project.title || "Project thumbnail";
+          thumb.appendChild(img);
+
+          const rank = document.createElement("div");
+          rank.className = "project-rank";
+          rank.textContent = "#" + project.rank;
+          thumb.appendChild(rank);
+
+          const body = document.createElement("div");
+          body.className = "project-body";
+
+          /* OPTIONAL PROJECT TITLE */
+          if (project.title && project.title.trim() !== "") {
+            const title = document.createElement("div");
+            title.className = "project-title";
+            title.textContent = project.title;
+            body.appendChild(title);
+          }
+
+          /* BOLD AUTHOR NAME */
+          const author = document.createElement("div");
+          author.className = "project-author";
+          author.textContent = project.author;
+          body.appendChild(author);
+
+          const actions = document.createElement("div");
+          actions.className = "project-actions";
+
+          if (project.url) {
+            const link = document.createElement("a");
+            link.className = "project-link";
+            link.href = project.url;
+            link.target = "_blank";
+            link.innerHTML = '<span>⧉</span> View project';
+            actions.appendChild(link);
+          }
+
+          body.appendChild(actions);
+          card.appendChild(thumb);
+          card.appendChild(body);
+          grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        container.appendChild(section);
+      });
+    }
+
+    fetch("projects.csv")
+      .then(r => r.text())
+      .then(text => renderQuarters(parseCSV(text)))
+      .catch(() => {
+        const status = document.getElementById("status");
+        status.className = "error";
+        status.textContent = "Error loading project data.";
+      });
+  </script>
+</body>
+</html>
