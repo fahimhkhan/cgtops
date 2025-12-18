@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CWF — Consolidating Weak Features</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="title-block">
+      <h1>CWF — Consolidating Weak Features</h1>
+      <p class="subtitle">Reproduction + Interactive Viewer Extension</p>
+      <p class="meta">Navya Mishra</p>
+    </div>
+    <div class="thumb">
+      <img src="images/thumb.jpg" alt="Project thumbnail" />
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Project Description</h2>
+      <p>
+        This project reproduces the Consolidating Weak Features (CWF) paper’s pipeline (L-BFGS optimization of
+        centroidal/farthest Voronoi structures on meshes) on the provided datasets (mobius, bunny), and extends it with an
+        interactive web viewer to inspect per-iteration metrics and geometry. The backend C++ code remains faithful to
+        the paper (lambda-weighted CVT + QE objective, per-iteration RVD OBJ/XYZ outputs); the frontend adds Plotly/Three.js
+        visualization with modes, opacity controls, and diff.
+      </p>
+      <p>
+        Dependency note: several listed versions in the original repo did not build cleanly on my machine; I resolved this by
+        pinning unlisted-but-compatible versions in vcpkg/MSVC (GMP/MPFR/CGAL/Boost/Eigen) to get the CWF solver compiling and running.
+      </p>
+      <p>
+        The viewer exposes all inspection modes used during reproduction: solid, wireframe, and points (sample sites), plus a
+        diff view (red/cyan non-overlap) powered by voxel hashing and downsampling for responsiveness. Metrics (Energy, LossCVT,
+        LossQE) are plotted per iteration; clicking any point loads the corresponding mesh. Base-path and metrics-file overrides
+        let you swap datasets (mobius, bunny, or new runs) without code changes.
+      </p>
+    </section>
+
+    <section class="gallery">
+      <h2>Results</h2>
+      <div class="grid">
+        <figure>
+          <img src="images/mobius_before_after.png" alt="Mobius before and after" />
+          <figcaption>Mobius input vs. final RVD</figcaption>
+        </figure>
+        <figure>
+          <img src="images/mobius_chart.png" alt="Mobius metrics chart" />
+          <figcaption>Mobius metrics (Energy, LossCVT, LossQE)</figcaption>
+        </figure>
+        <figure>
+          <img src="images/mobius_diff.png" alt="Mobius diff mode" />
+          <figcaption>Mobius diff: original vs. iteration (red/cyan)</figcaption>
+        </figure>
+        <figure>
+          <img src="images/bunny_before_after.png" alt="Bunny before and after" />
+          <figcaption>Bunny input vs. final RVD</figcaption>
+        </figure>
+        <figure>
+          <img src="images/bunny_chart.png" alt="Bunny metrics chart" />
+          <figcaption>Bunny metrics (Energy, LossCVT, LossQE)</figcaption>
+        </figure>
+        <figure>
+          <img src="images/bunny_diff.png" alt="Bunny diff mode" />
+          <figcaption>Bunny diff: original vs. iteration (red/cyan)</figcaption>
+        </figure>
+        <figure>
+          <img src="images/viewer_controls.png" alt="Viewer controls" />
+          <figcaption>Interactive viewer: base path, metrics, modes, opacity, diff</figcaption>
+        </figure>
+        <figure>
+          <img src="images/viewer_wire_points.png" alt="Viewer wireframe and points modes" />
+          <figcaption>Viewer in wireframe and points modes to inspect samples</figcaption>
+        </figure>
+        <figure>
+          <a href="images/CWF%20Paper.pdf">Presentation slides (PDF)</a>
+          <figcaption>Slides/PDF: CWF Paper</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Viewer Modes & Controls</h2>
+      <ul>
+        <li>Display modes: solid (geometry), wireframe (edge cues), points (sample sites).</li>
+        <li>Opacity sliders: independent for original vs. selected iteration; real alpha blending.</li>
+        <li>Diff mode: red = original-only, cyan = selected-only; overlap hidden; voxel-hash + downsample for speed.</li>
+        <li>Chart: Energy / LossCVT / LossQE traces with legend toggles, hover tooltips, zoom/pan; click loads mesh.</li>
+        <li>Dataset switches: Base-path + metrics-file inputs; original mesh auto-swaps (mobius/bunny) on dataset change.</li>
+        <li>Status/readout: shows mesh loads or failures; auto-fit on first load.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Run Outputs (evidence of execution)</h2>
+      <div class="grid">
+        <figure class="small">
+          <img src="images/mobius_outputs.png" alt="Mobius output files" />
+          <figcaption>Mobius output directory (OBJs/XYZ per iteration)</figcaption>
+        </figure>
+        <figure class="small">
+          <img src="images/bunny_outputs.png" alt="Bunny output files" />
+          <figcaption>Bunny output directory (OBJs/XYZ per iteration)</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Video Demo</h2>
+      <video controls width="640" src="images/video_demo.mp4"></video>
+    </section>
+
+    <section>
+      <h2>What Was Reproduced</h2>
+      <ul>
+        <li>L-BFGS optimization with line search on the paper’s meshes (mobius, bunny).</li>
+        <li>Lambda-weighted objective: Energy = λ·LossCVT + LossQE; per-iteration RVD OBJ/XYZ outputs matching the paper’s naming convention.</li>
+        <li>Convergence behavior: steady decrease in total energy and CVT term across iterations.</li>
+        <li>Geometry quality: preserved sharp ridges/thin structures in final outputs consistent with the paper’s figures.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>My Extension</h2>
+      <ul>
+        <li>Interactive web viewer (Three.js + Plotly) with robust data loading: metrics.json + OBJs, multi-candidate path resolution (repo-root/viewer-relative), base-path overrides, automatic dataset switching (mobius/bunny), and manual original override.</li>
+        <li>Display modes: solid, wireframe, points; independent opacity sliders for original/selected with correct alpha/depth-write; diff mode using voxel-hash + downsample to stay responsive (red/cyan non-overlap).</li>
+        <li>Metrics handling: legend/trace toggles to mirror paper plots (Energy, LossCVT, LossQE), click-to-load meshes from the chart, auto-fit on first load, status/readout for loading errors.</li>
+        <li>Helper scripts and UI flow to auto-generate metrics from mesh filenames when missing, and to regenerate metrics for any new run (no manual editing required).</li>
+        <li>Viewer stability/compatibility fixes: clearing/reloading meshes on dataset switches, resetting overrides appropriately, ensuring correct original mesh per dataset.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Dependencies & Environment</h2>
+      <ul>
+        <li>Backend: C++ (MSVC), CMake, vcpkg (gmp, mpfr, eigen3, cgal, boost, libigl), L-BFGS with line search.</li>
+        <li>Frontend: Three.js, Plotly.js.</li>
+        <li>Python 3 for helper scripts (metrics collection, simple HTTP server).</li>
+        <li>Tested on Windows 10/11 with VS toolset.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Prior Attempts & Lessons</h2>
+      <p>
+        Before settling on the CWF reproduction, I attempted to port two CUDA-heavy SIGGRAPH codebases to CPU by replacing their CUDA calls with CPU fallbacks. Both pipelines were GPU-bound, and the ports did not reach a working state within the available time. I then pivoted to CWF, completed the reproduction, and focused on the interactive viewer and stability/tooling improvements.
+      </p>
+      <ul>
+        <li>Attempted CPU port of “Practical Inverse Rendering of Textured and Translucent Appearance” (CUDA → CPU stubs; ~3k lines touched total across both attempts; not production-ready).</li>
+        <li>Attempted CPU port of “RenderFormer” (Transformer-based neural rendering) similarly; concluded they remained GPU-bound within the timeframe.</li>
+        <li>Pivoted to CWF: finished reproduction, hardened path/loading, built the viewer and auto-metrics workflow.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>References</h2>
+      <ul>
+        <li>Xu, Rui, et al. “CWF: Consolidating Weak Features in High-quality Mesh Simplification.” <em>arXiv</em>, 2024, arXiv:2404.15661.</li>
+        <li>Three.js, Plotly.js (frontend libraries).</li>
+        <li>vcpkg, CGAL, Boost, Eigen, GMP/MPFR (backend dependencies).</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Whoops N Hoops</title>
+        <link rel="shortcut icon" type="image/x-icon" href="thumb.jpg" />
+
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="container">
+
+            <img src="banner.png" style="display: block; margin-right: 100%;">
+            <div class="leftpanel">
+                <div class="box">
+                    <h2> What is Whoops N Hoops </h3>
+                    <p>Whoops and Hoops is an arcade drone simulation built with OpenGL which replicates real life drone 
+                    physics while keeping the arcade feel. The game currently includes <strong>realistic drone
+                        controlls via controller/radio reciever input, realisitic collision, and trick detection</strong>.
+                    </p>
+                </div>
+                <div class = "box">
+                    <h2>Downloads</h2>
+                    <p> <a href="WhoopsNHoops.zip">Raw Download</a> (.zip 18.6 mb) </p>
+
+                    <h2>Installation</h2>
+                    <p> <strong> Mac OS </strong> not yet... </p> 
+                    <p> <strong> Windows </strong> not yet..</p>
+                    <p> <strong> Raw </strong> make sure you have GLFW, GLEW, OpenGL, freetype, & cmake installed. <br> Then do: <br> cd WhoopsNHoops<br> mkdir build <br> cd build <br> cmake .. <br> make <br> ./WhoopsnHoops<br></p>
+                </div>
+            </div>
+
+
+            <div class="rightpanel">
+
+                <div class="box">
+                    <h2>Controls and Setup </h2>
+                    <p>There is very minimal keyboard input(there is none), so a controller is highly recommended.
+                    Plug in any recognizable controller by your system and it should work. As of now I have only
+                    tested an Xbox One controller and the Radiomaster Pocket.</p>
+                    <p>The controls can take a while to get down and there is no way to tweak your rates without editing
+                    code so the best advice I could give is move each stick with really good precision slowly (:. Hopefully
+                    this diagram helps for getting controlls right.</p>
+                    <img src="controller.png" width="400" height="400">
+                </div>
+            </div>
+
+            <div class="longbox">
+                <h2>Motivation and Inspiration </h2>
+                <p>The main inspiration to make a drone arcade game came from old games like <strong>Jet Set Radio & the Tony Hawk skateboarding games</strong>.
+                The aesthetic of the entire game was heavily inspired by Jet Set Radio which most of the textures came from :p. Flying drones
+                is a fun hobby, and I noticed that most current sims on the market take the realistic approach and none have dived deeper into 
+                the arcade feel, especially for the community that is involved with freestyleing. The term <strong>whoop</strong> just refers to a smaller drone usually
+                in sizes ranging from 65mm to 85mm. They are known for being flown for different styles, including racing and <strong>freestyle</strong>. This game
+                focuses more on the freestyling approach to flying, but racing modes could be added in the future. I tried to mimic the feel
+                of flying my air65 drone in real life, but there is still definitely some tweaking to be done...</p>
+            </div>
+
+            <div class="box">
+                <h2>Graphics Fundamentals Implemented</h2>
+                <p> A rough list of the graphic fundamentals implemented includes: </p>
+                <ul> 
+                    <li>Obj loading via the tinyobj library</li>
+                    <li>Hierarchical Model Stack</li>
+                    <li>Multi Model Obj files</li>
+                    <li>Sun Direction Shading</li>
+                    <li>Texture Mapping</li>
+                    <li>Blinn Phong Shading</li>
+                    <li>On Screen Text</li>
+                </ul>
+            </div>
+
+            <!--Heirachal Model Stack-->
+
+            <!--Sun Direction Shading-->
+
+            <!--On Screen Text-->
+
+
+            <div class ="box">
+                <h2>Gameplay Fundamentals Implemented</h2>
+                <p> A rough list of the gameplay fundamentals implemented includes: </p>
+                <ul> 
+                    <li><a href="#controller-support">Full Controller Support</a></li>
+                    <li><a href="#custom-physics"> Custom Drone Physics(with quaternions <img src="sideeye.webp" width="25px" height="25px">)</a></li>
+                    <li><a href="#AABB-OBB">AABB & OBB collision detection</a></li>
+                    <li><a href="#trick-detection">Drone trick detection</a></li>
+                </ul>
+            </div>
+
+            <div class ="box" id="controller-support">
+                <h3> Controller Support </h3>
+                <!-- controller support-->
+                <p>Controller support was possible due to the GLFW library, which allows you to
+                detect and poll gamepad inputs. The library is very well documented, so I was
+                able to add support for both gamepads, like Xbox and PS4 controllers, along with
+                support for actual drone transmitters. To give a rough idea of how this was done
+                I first polled the joystick locations, where each axis for each stick is mapped to
+                the range of -1 to 1. With these values, I could then map them to the yaw, pitch, 
+                and roll of the drone along with the thrust for the left stick y-axis, which I would have
+                to clamp to 0-1. Later, I hope to also poll the controller buttons to allow for other 
+                functionality like disarming/arming the drone, pausing, and anything else I can think of.
+                </p>
+            </div>
+
+            <div class="box">
+                <H4> Controler Being detected and me crashing (:</H4>
+                <img src="controller.gif">
+            </div>
+
+
+
+            <div class="box">
+                <H4>Drone Model Mimicking controller input <H4>
+                        <img src="drone.gif">
+            </div>
+            <div class="box" id="custom-physics">
+                <h3> Drone Physics </h3>
+                <!-- Custom Drone Physics-->
+                <p> As cool as custom drone physics sounds, the process was very straightforward when
+                it came to the forces acting on the drone, while I admit some of it was magic to me due
+                to the abstraction that the glm library does for <a href="https://eater.net/quaternions">quaternions</a>. The Drone is a struct that
+                holds all of its methods to either update position, orientation, or trick state along with
+                every attribute like thrust, gravity, mass, etc. The two main things that were neeeded to 
+                have realistic drone movement was orientation and position. Starting with position, I
+                simulated two forces acting on the drone: thrust and gravity. With these two forces and the
+                mass of the drone acceleration could be calculated. After acceleration was calculated we could
+                use delta time to find velocity and likewise position.
+                </p>
+            </div>
+
+            <div class="longbox" style="margin-top: -45px">
+                <p> Moving on to orientation, I decided to use quaternions to handle the rotations of the drone
+                since I was running into problems when just using euler angles alone plus I found that glm
+                has a header file that makes using them really simple. The drones update orientation would take
+                the mapped pitch, yaw, and roll values create seperate quaternions for each axis to then alter
+                the current rotation quaternion for the drone.
+                </p>
+            </div>
+
+
+            <div class="leftpanel">
+                <div class="box" id="AABB-OBB">
+                    <h3>AAB and OBB boxes</h3>
+                    <!--AABB & OBB boxes-->
+                    <p>For the <a href="https://tutorialedge.net/gamedev/aabb-collision-detection-tutorial/">AABB(Axis Aligned Bounding Boxes)</a> I created a class which handled the construction
+                    given a min and max corner. After the data structure was covered along with the needed methods
+                    to calculate if two boxes intersect for collision, I made it so that when objects were loaded 
+                    in via the tinyobj loader they also were packed together with the these AABB objects as well. So,
+                    when I would draw the model it would have its bounding box attribute which I could also check
+                    for collision against drone.</p>
+                </div>
+                <div class="box">
+                    <p>Regarding the OBB, I would say that the implementation went over my head and it doesn't entirelly work
+                    properly with collision between the OBB and AABB data structures because there was a lot of workarounds I went through.
+                    So I'll leave it to you to figure out how I can fix it (:</p>
+                </div>
+            </div>
+            <!--Drone Trick Detection-->
+
+            <div class="box">
+                <h4>Visualization of AABB</h4>
+                <img src="AABB.gif" width ="400" height="300">
+            </div>
+
+
+            <div class="boxlong" id="trick-detection">
+                <h3>Trick Detection</h3>
+                <p>To give a rough idea of what went behind getting the trick detection semi-working, there were three main 
+                steps in tracking the drone's orientation for tricks. First, I would create another method within the drone
+                struct for trick detection, which would be called on every frame. This function would calculate the delta angles 
+                for the orientation quaternion, which was easily done via a library function within glm. With these values, I could then keep track of the accumulation of each change in angle so that once a full rotation was done in either axis,
+                a trick would be detected. I ran into the issue of having tricks constantly being detected due to there being no 
+                threshold on when the drone's delta angles were calculated, so I introduced a minimum threshold for each angle that must
+                be exceeded before the trick would count. I also added a timer that starts, so the trick would have to be done within
+                a certain time limit. Other than the main logistics of tracking the tricks, a lot of the other work that went in was
+                just a bunch of conditional checks, which could probably be done better..</p>
+            </div>
+
+            <div class="box">
+                Current Tricks Include
+                <ul>
+                    <li> Flip: 400 pts</li>
+                    <li> Roll: 200 pts</li>
+                    <li> Yaw Spin: 100 pts</li>
+                    <li> Dive: 10 pts</li>
+                </ul>
+            </div>
+
+            <div class="box">
+                <img src="tricks.gif"> 
+            </div> 
+        </div>
+        by Anthony Rossi
+    </body>
+</html>
+

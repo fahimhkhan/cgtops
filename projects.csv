@@ -1,16 +1,16 @@
 course_code,course_name,term,year,rank,title,author,url,thumbnail
-CSC 471,Intro to Computer Graphics,Fall,2025,1,,Isaac Herbert Schwetman,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Fall,2025,2,,Alex Castellar,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Fall,2025,3,,Joaquin Anthony Arredondo,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Fall,2025,4,,Sean D. Sponsler,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Fall,2025,5,,Brandon Scott Howell,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Spring,2025,1,,Anthony Robert Rossi,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Spring,2025,2,,Jonathan Thomas Hagendoorn,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Spring,2025,3,,Ben Garvin,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Spring,2025,4,,Rohan Srinivasan Iyer,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 471,Intro to Computer Graphics,Spring,2025,5,,Ian Graeme Sjšholm,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 572,Intro to Computer Graphics,Fall,2025,1,,Anthony Robert Rossi,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 572,Intro to Computer Graphics,Fall,2025,2,,Jonathan Thomas Hagendoorn,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 572,Intro to Computer Graphics,Fall,2025,3,,Ben Garvin,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 572,Intro to Computer Graphics,Fall,2025,4,,Rohan Srinivasan Iyer,https://projectlink.com,thumbnails/thumbnail.jpg
-CSC 572,Intro to Computer Graphics,Fall,2025,5,,Ian Graeme Sjšholm,https://projectlink.com,thumbnails/thumbnail.jpg
+CSC 471,Intro to Computer Graphics,Spring,2025,1,Whoops N Hoops,Anthony Robert Rossi,471_s25/arossi09,471_s25/arossi09/thumb.jpg
+CSC 471,Intro to Computer Graphics,Spring,2025,2,Spooky Cave,Jonathan Thomas Hagendoorn,https://jhagendoorncp.github.io/471FinalProjectWebpage/,https://jhagendoorncp.github.io/471FinalProjectWebpage/thumb.jpg
+CSC 471,Intro to Computer Graphics,Spring,2025,3,Glider Game,Ben Garvin,https://bengarvin.dev/csc471/glider/index.html,https://bengarvin.dev/csc471/glider/thumb.jpg
+CSC 471,Intro to Computer Graphics,Spring,2025,4,The Endless Hallway,Rohan Srinivasan Iyer,471_s25/riyer08,471_s25/riyer08/thumb.jpg
+CSC 471,Intro to Computer Graphics,Spring,2025,5,Sokoban-like Puzzle,Ian Graeme Sjoholm,https://isjoholm.github.io/CSC-471-Final-Project-Webpage/,https://isjoholm.github.io/CSC-471-Final-Project-Webpage/thumb.jpg
+CSC 572,Computer Graphics,Fall,2025,1,Vulkan demo,Aidan Christopher Ream and Claire Estelle Ogawa,572_f25/ceogawa_acream,572_f25/ceogawa_acream/thumb.png
+CSC 572,Computer Graphics,Fall,2025,2,Arisu,David Cruz,572_f25/dcruz39,572_f25/dcruz39/thumb.jpg
+CSC 572,Computer Graphics,Fall,2025,3,Ocean Sim,Anthony Robert Rossi,572_f25/arossi09,572_f25/arossi09/thumb.jpg
+CSC 572,Computer Graphics,Fall,2025,4,Wind Sim,Madeline Connelly Rogers,572_f25/mroger29,572_f25/mroger29/thumb.png
+CSC 572,Computer Graphics,Fall,2025,5,CWF,Navya Mishra,572_f25/nmishr03,572_f25/nmishr03/thumb.jpg
+CSC 471,Intro to Computer Graphics,Fall,2025,1,Helicopter Sim,Isaac Herbert Schwetman,471_f25/ischwetm,471_f25/ischwetm/thumb.jpg
+CSC 471,Intro to Computer Graphics,Fall,2025,2,Infinite Wasteland,Alex Castellar,471_f25/acaste42,471_f25/acaste42/thumb.jpg
+CSC 471,Intro to Computer Graphics,Fall,2025,3,Heaven & Hell Minigame,Joaquin Anthony Arredondo,471_f25/joaquin,471_f25/joaquin/thumb.jpg
+CSC 471,Intro to Computer Graphics,Fall,2025,4,Procedural City,Sean D. Sponsler,471_f25/sean,471_f25/sean/thumb.jpg
+CSC 471,Intro to Computer Graphics,Fall,2025,5,Spooky House,Brandon Scott Howell,471_f25/bshowell,471_f25/bshowell/thumb.jpg

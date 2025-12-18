@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #0b0f18;
+  color: #e5e7eb;
+  line-height: 1.5;
+}
+a {
+  color: #7dd3fc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background: #111827;
+  border-bottom: 1px solid #1f2937;
+}
+.title-block h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+}
+.title-block .subtitle {
+  margin: 0 0 4px 0;
+  color: #9ca3af;
+}
+.title-block .meta {
+  margin: 0;
+  color: #7dd3fc;
+}
+.thumb img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #1f2937;
+}
+main {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto 80px auto;
+}
+section {
+  margin-bottom: 32px;
+}
+section h2 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+  color: #f3f4f6;
+}
+p, li {
+  color: #d1d5db;
+}
+.gallery .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+figure.small img {
+  max-width: 260px;
+  margin: 0 auto;
+  display: block;
+}
+figure {
+  margin: 0;
+  background: #111827;
+  padding: 10px;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+}
+figure img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+}
+figcaption {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+video {
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+}
+ol {
+  padding-left: 20px;
+}
+ul {
+  padding-left: 20px;
+}

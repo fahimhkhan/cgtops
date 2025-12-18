@@ -1,0 +1,65 @@
+
+:root {
+	--border-color: rgb(90, 90, 90);
+	--body-bg-image: ;
+}
+
+
+body {
+	font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 20px;
+	background-color: white;
+	background-Image: url("images/background.png");
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	margin: 0;
+	padding: 40px;
+	color: black;
+}
+
+img{
+	max-width: 400px;
+}
+
+.container {
+	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 900px;
+	padding: 20px;
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+.leftpanel,
+.rightpanel {
+	flex: 1;
+	min-width: 300px;
+}
+
+/* Reusable content box */
+.box {
+	max-width: 400px;
+	padding: 10px;
+	margin: 10px;
+}
+
+.longbox {
+	max-width: 900px;
+	padding: 10px;
+	margin: 10px;
+}
+
+h1,
+h2 {
+	color: red;
+}
+
+h3 {
+	color: blue;
+}
+
+strong {
+	color: #249fde;
+}

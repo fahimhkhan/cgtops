@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>CSC572 Final: Ocean sim with dynamic LOD</title>
+		<link rel="shortcut icon" type="image/x-icon" href="thumb.jpg">
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+		<h1>CSC572 Final: Ocean sim with dynamic LOD</h1>
+		<div class="container">
+			<div class="boxlong" id="trick-detection">
+				<h3>Project Overview</h3>
+				<p>For my final project I explored simulating ocean's effieciently using
+					procedural motion and dynamic level of detail. Some key algorithms and techniques I implemented
+					include: fractional brownian motion (FBM) wave sampling, dynamic mesh upsampling/downsampling, and cubemap reflections
+					.</p>
+			</div>
+
+			<div class="box" id="">
+				<h3>FBM Wave Sampling</h3>
+				<p>I explored several techniques for generating a realistic-looking ocean surface before landing on
+					FBM. Some techniques that I considered included Gerstner waves and utilizing IFFT to transform wave
+					spectra to the spatial domain for animating. I ended up choosing to use the nature of adding sine wave
+					functions and FBM, as it provided good results and was not too complex to implement within the given time
+					frame. To give an overview of the method, we can look at what superposition of sines really means.</p>
+				<p>
+					The superposition of sines tells us that by adding multiple sine wave functions together, a new wave
+					is produced, which holds the summation of each wave at that given point. This allows us to produce a
+					complex displacement function by adding many wave samples with varying frequencies and amplitudes. This alone
+					loses shape fast. If we take many, many samples with varying frequency and amplitudes in hopes
+					of a realistic ocean, instead we get a chaotic mess as the waves have no limiting factor they approach.
+				</p>
+
+				<p>Fractional Brownian Motion solves this issue by adding an external factor at each step.
+					FBM does this by increasing the frequency and decreasing the amplitude by a set scaler at each step. This solves
+					the issue by allowing finer and finer waves to be added at each step so that the amplitudes approach zero and don't
+					cause chaotic mega waves.</p>
+			</div>
+
+			<div style="border: dotted;"class="box">
+				<img src="images/wave1.png">
+				<img src="images/wave2.png">
+				<img src="images/wave3.png">
+				<img src="images/wave4.png">
+				<h6 style="text-align: center; margin: 0px 0px;">
+					Fig 1. Wave Sample Iterations
+				</h6>
+			</div>
+
+			<div class="boxlong" id="">
+				<h3>Dynamic Level Of Detail</h3>
+							<p>Dynamic level of detail was also added to the program to help with performance.
+			 		 Since each wave is being sampled around 64 times per vertex, this can add a lot of computation overhead on each
+				   draw call. With this in mind, I chose to explore the topic we discussed over the quarter relating to geometry manipulation
+					 via mesh upsampling and downsampling. This stage of the program was implemented using OpenGL's tessellation shader pipeline.
+					 </p>
+
+					 <p>Tesselation shaders appear right after the geometry shader within the OpenGL rendering pipeline. They are an optional shader
+					that allows us to perform subdivisions on the primitives generated after the vertex shader. There are three steps to this stage, two of which
+					are programmable: <strong>Tesselation Control</strong>, Tesselation Primative Gen, and <strong>Tesselation Evaluation</strong>. </p>
+
+					<p>The tesselation
+					control shader (TCS) is the first part of the process, this is where we determine how much tessellation to do. I utilized this shader to perform
+					dynamic tesselation by interpolating between the camera-vertex distance for a tesselation level. This allowed for further patches to be simplified,
+					 and closer patches upsampled/subdivided. </p>
+
+					<p> After the intermediate points are generated, the tesselation evaluation shader (TES) evaluates these intermediate points to generate a new vertex point.
+					It was within this shader that I sampled each newly created vertex and performed the FBM sum of sines process. Overall, with the dynamic LOD large ocean scenes
+					could be rendered with wave sample counts of over 100 while not falling under 60fps.</p>
+			</div>
+
+			<div style=" padding: 10px 10px;  margin-left: 40px; align-items: center;">
+				<img style="max-width: 800px;" src="images/tesselation.png">
+				<h6 style="text-align: center; margin: 0px 0px;">
+					Fig 2. Wireframe Tesselation Example 
+				</h6>
+			</div>
+
+
+			<div class="box" id="">
+				<h3>Cubemap Reflections</h3>
+				<p>For the water to be a little less strainous on the eyes I also added basic lighting techniques including cubemap reflections and fresnel.
+				The cubemape based reflections work by sampling the reflected vector at each point from the camera onto the cubemap.
+				This along with basic fresnel which makes things more reflective depending on the the angle of incidence helped sell the overall look of water.
+				So as we get closer to the water and look down the horizon we get better water reflections and light shimmer.</p>
+			</div>
+
+			<div>
+
+			<div class="box">
+				<img src="images/cubemap.png">
+				<h6 style="text-align: center; margin: 0px 0px;">
+					Fig 3. Cubemap reflection diagram
+				</h6>
+			</div>
+			<div class="box">
+				<img src="images/fresnel.png">
+				<h6 style="text-align: center; margin: 0px 0px;">
+					Fig 4. Example of high reflective incidence 
+				</h6>
+			</div>
+
+			</div>
+
+
+			<div class="boxlong" id="">
+				<h3>Stylistically Customizable</h3>
+				<p>With the many parameters that go into the wave sampling and calculations this also allowed for lots of stylistic control. With this capability,
+				I was able to port the ocean to another scene pretty well.</p>
+			</div>
+
+
+			<div style="padding: 10px 10px; margin-left: 40px; text-align: center;">
+				<img style="max-width: 800px;" src="images/scene.png">
+				<h6 style="margin: 0;">
+					Fig 5. Ocean ported to harbor scene
+				</h6>
+			</div>
+			<h4>
+				References
+			</h4>
+			<ul>
+				<li>
+					Fractional Brownian Motion basics: <a href="https://thebookofshaders.com/13/">https://thebookofshaders.com/13/</a>
+				</li>
+				<li>
+					Project that went over lots of the math: <a href="https://helyum.it/projects/water-shader/">https://helyum.it/projects/water-shader/</a>
+				</li>
+				<li>
+					Learning how Tesselation works: <a href="https://learnopengl.com/Guest-Articles/2021/Tessellation/Tessellation">https://learnopengl.com/Guest-Articles/2021/Tessellation</a>
+				</li>
+
+				<li>
+					Original Paper to implement: <a href="https://dl.acm.org/doi/10.1145/3721239.3734101">https://dl.acm.org/doi/10.1145/3721239.3734101</a>
+				</li>
+				<li>
+					Acerolas video on topic: <a href="https://www.youtube.com/watch?v=PH9q0HNBjT4&t=1062s">://www.youtube.com/results?search_query=acerola+water</a>
+				</li>
+			</ul>
+		</div>
+		by Anthony Rossi
+	</body>
+</html>

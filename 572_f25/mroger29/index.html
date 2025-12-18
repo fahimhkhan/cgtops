@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View-Dependent Texture Mapping</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 15%;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 10px 0;
+        }
+
+        header h1 {
+            margin-bottom: 0.2em;
+        }
+
+        header p {
+            margin: 0.2em 0;
+        }
+
+        main {
+            background-color: #ffffff;
+            padding: 30px 40px 40px 40px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 0.4em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.2em;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .results-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .results-images img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 4px;
+            background: #fafafa;
+        }
+
+        figure {
+            margin: 0;
+            max-width: 48%;
+        }
+
+        figure figcaption {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.85em;
+            color: #777;
+            padding-bottom: 30px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 0 5%;
+            }
+            main {
+                padding: 20px;
+            }
+            figure {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <!-- Project title -->
+    <h1>Blender Scripting a Wind Simulator</h1>
+
+    <!-- Author name & email (replace with your info) -->
+    <p><strong>Author:</strong> Madeline Rogers</p>
+    <p><strong>Email:</strong> <a href="mailto:mroger29@calpoly.edu">mroger29@calpoly.edu</a></p>
+</header>
+
+<main>
+    <!-- Introduction -->
+    <!-- <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+            
+        </p>
+    </section> -->
+
+    <!-- Description and Methods -->
+    <section id="methods">
+        <h2>Description and Methods</h2>
+        <h3>Overview</h3>
+        <p>
+            There is the local motion of the branches and leaves. This effects the 
+            bend amount and sway speed of the tree.
+            This motion is based on a sine wave with noise added to it so the motion is not completely uniform.
+        </p>
+        <p> 
+            There is a jitter effect on the leaves only. It contributes to the Extra leaf movement
+            The lighter elements, like the leaves, are more affected by wind so they have another level of motion added to them.
+        </p>
+
+        <p>
+            This project was created with Blender’s Python. Adding a frame driver is easy with Blender’s normal tools, but
+            with scripting I had to find the path to specific data in order to access and modify it.
+            This took multiple deep dives onto the documents page and console.
+            I wrote a delete function so I could run that each time instead of going to each element and resetting them to have no modifiers. 
+
+
+        </p>
+
+        <!-- <h3>Goals</h3>
+        <ul>
+            <li>--</li>
+            <li>--</li>
+        </ul> -->
+    </section>
+
+    <!-- Results -->
+    <section id="results">
+        <h2>Results</h2>
+        <p>
+           Blender's render images.
+        </p>
+
+        <div class="results-images">
+            <figure>
+                <!-- Replace src with your actual image path -->
+                <img src="images/frame11.png" alt="Baseline single texture mapping result">
+                <figcaption>Figure 1: Full View</figcaption>
+            </figure>
+
+            <figure>
+                <!-- Replace src with your actual image path -->
+                <img src="images/jitter_frame01.png" alt="View-dependent texture mapping result">
+                <figcaption>Figure 2: Close Up</figcaption>
+            </figure>
+        </div>
+
+        <h3> Video Demonstration</h3>
+        <p>
+            <!-- Replace href with your actual video link (e.g., YouTube or hosted file) -->
+            <video width="400" height="250" controls>
+                <source src="treeRendered5.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video>
+        </p>
+    </section>
+
+    <!-- Conclusion and Future Work -->
+    <!-- <section id="conclusion">
+        <h2>Conclusion and Future Work</h2>
+        <p>
+           --
+        </p>
+        <p>
+            If I were to continue this project I would want to add a UI where 
+            Users could modify the wind speed with a slider to achieve a range of low to high speeds 
+            Users could input a wind direction in the form of a vector
+            This way the wind simulator would be more customizable 
+
+        </p>
+    </section> -->
+
+      <!-- Source Materials -->
+      <section id="sources">
+        <h2>Source Materials</h2>
+        <ul>
+            <li>
+                <strong>Inspiration</strong> <a href="https://youtu.be/ZA1vL7S8eWA?si=SKTonMIF9eVfbRDZ">The Secrets Behind AAA Wind Simulation in OpenGL | Indie Devlog</a></p>
+            </li>
+            <li>
+                <strong>Blender Animation Tutorial</strong> <a href="https://youtu.be/MHJK_JXlapk?si=3aCRyReso8fCIhm7">How to Fake Wind Animation on Trees - Blender</a></p>
+            </li>
+            <li>
+                <strong>Blender Documentation</strong> <a href="https://docs.blender.org/api/current/info_quickstart.html">Blender Python API</a></p>
+            </li>
+        </ul>
+    </section>  
+
+</main>
+
+<footer>
+    <p>&copy; 2025 Madeline Rogers. All rights reserved.</p>
+</footer>
+</body>
+</html>

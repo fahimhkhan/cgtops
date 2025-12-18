@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>CSC471 Final Project Webpage</title>
+</head>
+<body>
+
+<h1>Final Project Webpage</h1>
+<p>This project features a very rough aerodynamic and physical simulation of a helicopter and parts of its control system. It accepts keyboard and mouse input and renders the scene in real time.<br><br>
+<img width="900" alt="A preview screenshot of the helicopter at rest on the helipad" src="preview.png">
+</p>
+<h2>Features</h2>
+<p>
+<h3>Real Time graphics with up to 10 point lights and Blinn-Phong shading</h3><br>
+This includes loading Wavefront object (.obj) files, and associated material (.mtl) files supporting ambient, diffuse, and specular material properties as well as texture maps for diffuse and ambient color as specified by Wavefront. This simplified asset loading process requires minimal hardcoded setup and refers most object properties to the object, material, and configuration files. The result is all objects rendered are instantiated as the class object, and any behavior at runtime is applied separately using a basic event bus (update, key, and physics actions defined in implemetations of associated abstract classes). This massively simplifies data flow and reduces programming load in the development process.<br>
+<h3>Simplified specification of multipart animations</h3><br>
+In addition to the Wavefront object specification an additional data file may be included that can specify the inheritance structure of an object's shapes with the same name ex. (*.obj, *.cfg). This can include bounding box dimensions, pivot points for rotations, inheritance structure for hierarchical transformation, and keyframes for animation including rotation, translation, scale, and time data. This is in object-local coordinates and massively simplifies the animation and data entry process for setting up a scene using an external tool such as blender.<br>
+<img width="900" alt="A Screenshot of blender being used to transform the doors of the helicopter as if to configure the animation to open and close them" src="blender.png"><br>
+Shown here is the helicopter in wireframe view in blender. After manipulating the transformation of a part of the object, the resulting coordinates can be written back out into the data file. The method to edit graphically in object-local space (after converting blender's Z-up coordinates to OpenGL's Y-up system) is much simpler than trying to derive the transformations non-graphically. By this method the doors, guns, and rotors of the helicopter shown in the simulation were animated at a high level without much effort. Certain keyframes are simply defined in the configuration file, and then a behavior is defined to trigger a timed interpolation between them.<br>
+Blender can also be used to define entirely new geometry with matching texture coordinates and appropriately unwrap simple shapes into flat projections for easy asset production. For example the Helipad in the simulation was produced by hand in this way. The model and material file was exported directly from blender and loaded by the program without any nessicary modification of the data.<br>
+<img width="500" alt="An image of the helipad model as seen in the simulation" src="helipad_view.png">
+<img width="500" alt="The helipad texture as it appears in the resource files" src="helipad.png"><br>
+Using Blender's texture mapping tools, textures can even be optimized into smaller sizes to save on performace.<br>
+<h3>Axis-Aligned Bounding-Box based physics calculations</h3><br>
+Using Axis-Aligned Bounding Boxes defined by their bottom left and top right corners, fast physics checks against multiple objects in all three dimensions can be computed every physics update and used to determine allowable directions of movement for the helicopter in motion. These are defined in the configuration and rotated and scaled with the object's transformation in order to best approximate the location of the object's collider at any given time. There is a debug shader provided that colors these boxes, transparently, according to their normals.
+<img width="900" alt="A visualization of the helicopter in motion with the axis-aligned bounding-box debug shader enabled" src="aabb.png">
+</p>
+
+<p>
+<h1>References</h1>
+<p> <a href="https://ntrs.nasa.gov/api/citations/19840020737/downloads/19840020737.pdf">UH-60A Black Hawk engineering Simulation Program: Volume 1 - Mathematical Model</a> -- produced by Sikorsky Aircraft for NASA in 1981
+</p>
+<p>This was quite helpful in defining the physical characteristics of the helicopter for the simulation. Of particular note is the lift coefficient of each blade (CLMR) vs. blade angle of attack (AFTFMR) graph Figure 1.5.2 on page 5.1-51, and the Summary of Mass Properties Characteristics table 4.2 on page 4.8 which provides the moments of rotational inertia about the various axis as well as the weight and center of gravity under different loads.
+</p>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedural City - CSC 471 Final Project</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Procedural City</h1>
+        <p class="subtitle">Infinite Procedurally-Generated City</p>
+        <p class="author">Sean Sponsler | CSC 471 Final Project</p>
+      </header>
+
+      <div class="section">
+        <h2>Project Overview</h2>
+        <p>
+          An advanced real-time 3D graphics application featuring an infinitely
+          procedurally-generated city with dynamic weather effects, hierarchical
+          animation, and sophisticated performance optimizations. An infinitely
+          procedural city is generated using a chunk-based system that loads and
+          unloads 3×3 grids of chunks around the camera position. Buildings,
+          roads, and animated excavators are procedurally placed using a seeded
+          random number generator for consistent results. A dynamic weather
+          system simulates rain with physics-based particles and dramatic splash
+          effects. Distance fog enhances depth perception, while Blinn-Phong
+          shading and texture mapping create a visually appealing environment.
+          Performance is optimized mainly through frustrum and distance culling.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Gallery</h2>
+        <div class="gallery">
+          <div class="gallery-item">
+            <img
+              src="large_overview.png"
+              alt="Large City Overview"
+              style="width: 50%; height: auto"
+            />
+            <div class="gallery-caption">
+              Large City Overview with Distance Culling
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="traveling.gif"
+              alt="Atmospheric Fog Effect"
+              style="width: 50%; height: auto"
+            />
+            <div class="gallery-caption">Infinitely rendering</div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="excavator.gif"
+              alt="Animated Excavator"
+              style="width: 50%; height: auto"
+            />
+            <div class="gallery-caption">
+              Hierarchically Animated Excavator (2% spawn chance in place of
+              building block)
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="rain.gif"
+              alt="Rain and Fog Combined"
+              style="width: 50%; height: auto"
+            />
+            <div class="gallery-caption">
+              Rain System with Fog (limited to one chunk for performance)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Controls</h2>
+        <ul class="controls-list">
+          <li><strong>W / A / S / D</strong> — Camera movement (horizontal)</li>
+          <li><strong>Q / E</strong> — Camera height adjustment</li>
+          <li><strong>Mouse Drag</strong> — Look around</li>
+          <li><strong>Mouse Scroll</strong> — Adjust pitch and yaw</li>
+          <li><strong>T</strong> — Toggle fog effect</li>
+          <li><strong>N</strong> — Toggle rain system</li>
+          <li><strong>F</strong> — Toggle frustum culling</li>
+          <li><strong>V</strong> — Toggle debug pivot spheres</li>
+          <li><strong>Z (hold)</strong> — Wireframe mode (will lag)</li>
+          <li>
+            <strong>G</strong> — Toggle performance stats (printed in console
+            every 2 seconds)
+          </li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Technology</h2>
+        <p>
+          This project does not utilize any third-party library not included in
+          the base code of CSC 471. The following technologies were used:
+        </p>
+        <ul class="tech-list">
+          <li>OpenGL 3.3</li>
+          <li>GLSL Shaders</li>
+          <li>C++</li>
+          <li>GLM Mathematics</li>
+          <li>GLFW</li>
+          <li>GLAD</li>
+          <li>TinyObjLoader</li>
+          <li>CMake</li>
+          <li>Blinn-Phong Lighting</li>
+          <li>Chunk Generation</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>More Info</h2>
+
+        <h3>Chunk System</h3>
+        <p>
+          Implements a chunk-based loading system. The world is divided into
+          40×20 grid chunks that load and unload dynamically based on camera
+          position. Throttling prevents frame drops by limiting chunk loads to 2
+          per frame and updating only every 0.2 seconds or when the camera moves
+          significantly. Each chunk is erased on unload, freeing memory and
+          guaranteeing consistent procedural generation.
+        </p>
+
+        <h3>Culling, Camera & Skybox</h3>
+        <p>
+          Implements frustum culling to skip objects outside the camera view and
+          distance culling for objects beyond 150 units. The skybox is rendered
+          with depth writing disabled so all geometry appears in front of it.
+          Additionally, the skybox and global light follow the camera as it
+          travels. The camera has proper collision detection with the ground
+          plane, the skybox, and buildings for project completion.
+        </p>
+
+        <h3>Physics Simulation</h3>
+        <p>
+          Rain particles follow realistic physics with gravity simulation. Upon
+          ground collision, particles spawn dramatic splash effects with 500
+          particles that shoot outward in random directions.
+        </p>
+
+        <h3>Procedural Generation</h3>
+        <p>
+          Each chunk uses a seeded random number generator for consistent,
+          reproducible results. Buildings are placed with controlled jitter
+          within lot boundaries, assigned random meshes from 10 variants, given
+          random scales (0.8-1.2x, tuned for clipping), and tinted with colors
+          from 6 different palettes for visual variety. All buildings (and
+          excavators) use the same material, shaded randomly each time. Due to
+          creative and technical constraints, road textures are not blended with
+          the ground texture and are placed on top (causing some clipping
+          issues).
+        </p>
+
+        <h3>Fog Effect</h3>
+        <p>
+          Implements distance-based fog that intensifies with distance from the
+          camera, enhancing depth perception and atmosphere.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Compilation & Running</h2>
+        <p>Standard CMake build process:</p>
+        <ol style="line-height: 2; margin-left: 20px; margin-top: 15px">
+          <li>
+            <code>mkdir build && cd build</code>
+          </li>
+          <li>
+            <code>cmake ..</code>
+          </li>
+          <li>
+            <code>make</code>
+          </li>
+          <li>
+            <code>./P3Base</code>
+          </li>
+          <li>
+            <code>
+              Note: to view advanced debug information, set
+              <strong>bool debug = true;</strong> in main.cpp (should have added
+              flag support)</code
+            >
+          </li>
+        </ol>
+      </div>
+    </div>
+  </body>
+</html>

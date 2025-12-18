@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vulkan Cloth Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 15%;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 10px 0;
+        }
+
+        header h1 {
+            margin-bottom: 0.2em;
+        }
+
+        header p {
+            margin: 0.2em 0;
+        }
+
+        main {
+            background-color: #ffffff;
+            padding: 30px 40px 40px 40px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-bottom: 0.4em;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 0.2em;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .results-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            background: #fafafa;
+            padding: 4px;
+        }
+
+        .results-images img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            padding: 4px;
+            background: #fafafa;
+        }
+
+        figure {
+            margin: 0;
+            max-width: 48%;
+        }
+
+        figure figcaption {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.85em;
+            color: #777;
+            padding-bottom: 30px;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 0 5%;
+            }
+            main {
+                padding: 20px;
+            }
+            figure {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <!-- Project title -->
+    <h1>Vulkan Cloth Simulation</h1>
+
+    <!-- Author name & email (replace with your info) -->
+    <p><strong>Authors:</strong> Aidan Ream and Claire Ogawa</p>
+    <p><strong>Emails:</strong> <a href="mailto:acream@calpoly.edu">acream@calpoly.edu </a>  and <a href="mailto:ceogawa@calpoly.edu">ceogawa@calpoly.edu</a></p>
+    
+
+</header>
+
+<main>
+
+    <!-- Introduction -->
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+            Cloth simulation has traditionally been done using many different methods. One of the most efficient methods 
+            used in modern graphics programming is the utilization of GPU side compute shaders to calculate the physical 
+            interactions for a simulated cloth plane. Compute shaders can be implemented with every industry standard modern
+            graphics library, and for this project we will be adapting the work of Va Hongly, Min-Hyung Choi, and Min Hong 
+            in Vulkan. 
+        </p>
+        <p>
+            Cloth simulation is important for modeling garments in media, like films, video games, contributing to both realism 
+            and stylistic rendering. Modeling this behavior contributes to scene aesthetics, immersion, and believable physics 
+            interactions. It is implemented using “the mass-spring system,” and both implicit and adaptive constraints [6]. 
+            Our project will implement these physics mechanisms using compute shaders to construct a believable cloth simulation.
+        </p>
+        <a href="csc572_final_proj.pdf" target="_blank">Final Project Presentation</a>
+
+    </section>
+
+    <!-- Description and Methods -->
+    <section id="methods">
+        <h2>Description and Methods</h2>
+        <h3>Overview</h3>
+        <p>
+            This project takes a plane and texture, applies according transforms, and runs through a shader pipeline
+            to simulate cloth motion. 
+        </p>
+
+        <h3>Process and Algorithm</h3>
+        <ol>
+            <li><strong>Development Environment</strong>
+                <ul>
+                    <!-- <li>Load a 3D mesh and its texture coordinates.</li> -->
+                    <!-- <li>Load multiple textures, each coming from a different camera viewpoint.</li> -->
+                    <li>Download and install VulkanSDK</li>
+                    <li>Configure Visual Studio and linker settings.</li>
+
+                </ul>
+            </li>
+            <li><strong>Install and Link Additional Dependencies</strong>
+                <ul>
+                    <li>GLM</li>
+                    <li>GLFW</li>
+                    <li>stb_image.h</li>
+                    <li>tinyObjLoader</li>
+                </ul>
+            </li>
+            <li><strong>Set Up Error Checking and Check Hardware</strong>
+                <ul>
+                    <li>Configure validation layers for error handling.</li>
+                    <li>Check for supported extensions.</li>
+                    <li>Pick graphics card to use.</li>
+                </ul>
+            </li>
+            <li><strong>Hello Triangle</strong>
+                <ul>
+                    <li>Create graphics pipeline and pipeline setup.</li>
+                    <li>Involves configuration of swapchain, imageviews, framebuffers, 
+                        vertexbuffers and vertex and fragment shader modules.</li>
+
+                </ul>
+            </li>
+            <li><strong>Next Steps</strong>
+                <ul>
+                    <li>Implement MVP support for matrix transforms.</li>
+                    <li>Implement depth buffering.</li>
+                    <li>Load in meshes with tinyObjLoader.</li>
+
+                </ul>
+            </li>
+            <li><strong>Compute Shader</strong>
+                <ul>
+                    <li>Configure compute shader to pass in vertex positions and velocities.</li>
+                    <li>Pass in UBO.</li>
+                    <li>Implement mass-spring system.</li>
+
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Goals</h3>
+        <ul>
+            <li>Implement a forward renderer in Vulkan.</li>
+            <li>Using compute shaders, implement a spring-based cloth simulation.</li>
+            <li>Implement cloth interactions with simple objects. </li>
+        </ul>
+    </section>
+
+    <!-- Results -->
+    <section id="results">
+        <h2>Results</h2>
+        <p>
+            This section showcases the intermediate and static results of our cloth simulation, in the following
+            video demonstrations, you can see our final product. 
+        </p>
+
+        <div class="results-images">
+            <figure>
+                <!-- Replace src with your actual image path -->
+                <img src="images\depthbuf.png">
+                <figcaption>Figure 1: Initial Depth Buffering and Plane Rendering.</figcaption>
+            </figure>
+
+            <figure>
+                <!-- Replace src with your actual image path -->
+                <img src="images\image.png">
+                <figcaption>Figure 2: Cloth Simulation.</figcaption>
+            </figure>
+        </div>
+
+        <h3>Video Demonstrations</h3>
+        <p>
+            <!-- Short videos demonstrating the cloth simulation (in fill and wireframe mode). -->
+        <p>
+            <!-- Replace href with your actual video link (e.g., YouTube or hosted file) -->
+             <!-- <video src="images\Screen Recording 2025-12-10 140745.mp4"></video> -->
+            <video controls>
+                <source src="images/Screen Recording 2025-12-10 140745.mp4" type="video/mp4">
+                <!-- Your browser does not support the video tag. -->
+            </video>
+             <video controls>
+                <source src="images\Screen Recording 2025-12-10 140633.mp4" type="video/mp4">
+                <!-- Your browser does not support the video tag. -->
+            </video>
+
+             <video controls>
+                <source src="images\Screen Recording 2025-12-10 140932.mp4" type="video/mp4">
+                <!-- Your browser does not support the video tag. -->
+            </video>
+
+
+            <!-- <a href="images\Screen Recording 2025-12-10 140745.mp4" target="_blank">View the demo video</a> (optional). -->
+        </p>
+    </section>
+
+    <!-- Conclusion and Future Work -->
+    <section id="conclusion">
+        <h2>Conclusion and Future Work</h2>
+        <p>
+            The implemented cloth simulation successfully adapts the previous work
+            in OpenGL to Vulkan. Using compute shaders and the basic mechanics of 
+            the mass-spring system, we were able to complete a prototype cloth simulation. 
+            Through this project, we demonstrated significant growth in our understanding of Vulkan,
+            GPU state management, and compute shaders. 
+        </p>
+        <p>
+            There are several avenues for future work:
+        </p>
+        <ul>
+            <li>
+                <strong>Refactor Vulkan code for scalability</strong>
+            </li>
+            <li>
+                <strong>Add obj interactivity</strong>
+            </li>
+            <li>
+                <strong>GUI for interaction</strong>
+        </ul>
+    </section>
+
+    <!-- Source Materials
+    <section id="sources">
+        <h2>Source Materials</h2>
+        <ul>
+            <li>
+                <strong>Original VDTM Idea:</strong> Based on the view-dependent texture mapping approach introduced
+                in SIGGRAPH work by Debevec et al.
+            </li>
+            <li>
+                <strong>Photogrammetric Modeling:</strong> Debevec, P., Taylor, C., &amp; Malik, J.
+                “Modeling and Rendering Architecture from Photographs”, SIGGRAPH 1996.
+            </li>
+            <li>
+                <strong>Textbook Reference:</strong> Szeliski, R. <em>Computer Vision: Algorithms and Applications</em>,
+                Springer, 2010.
+            </li>
+            <li>
+                <strong>Rendering and Shaders:</strong> OpenGL tutorial materials (e.g. learnopengl-style resources)
+                for mesh loading, camera control, and GLSL shader development.
+            </li>
+            <li>
+                <strong>Course Notes:</strong> SIGGRAPH course notes on image-based rendering and projective texture mapping.
+            </li>
+            <li>
+                <strong>GitHub (Example / Placeholder):</strong>
+                <a href="#" target="_blank">https://github.com/your-username/view-dependent-texture-mapping</a>
+            </li>
+        </ul>
+    </section> -->
+
+    
+    <!-- References -->
+<section id="references">
+    <h2>References</h2>
+    <ol>
+        <li>
+            "Cloth Simulation in Vulkan with Compute Shaders." YouTube video. 
+            <a href="https://www.youtube.com/watch?v=D-P-TYLjLJY">https://www.youtube.com/watch?v=D-P-TYLjLJY</a>.
+        </li>
+
+        <li>
+            "Cloth Animation Using the Compute Shader." YouTube video.
+            <a href="https://www.youtube.com/watch?v=ms010Fz02wo">https://www.youtube.com/watch?v=ms010Fz02wo</a>.
+        </li>
+
+        <li>
+            Vulkan Tutorial. 
+            <a href="https://vulkan-tutorial.com/Introduction">https://vulkan-tutorial.com/Introduction</a>.
+        </li>
+
+        <li>
+            Lu, Zixuan, Ziheng Liu, Lei Lan, Huamin Wang, Yuko Ishiwaka, Chenfanfu Jiang, Kui Wu, and Yin Yang. 
+            “High-performance CPU Cloth Simulation Using Domain-decomposed Projective Dynamics.” 
+            <em>ACM Transactions on Graphics</em> 44, 4 (2025), Article 51.  
+            <a href="https://doi.org/10.1145/3731182">https://doi.org/10.1145/3731182</a>.
+        </li>
+
+        <li>
+            ACM Digital Library entry for “High-performance CPU Cloth Simulation Using Domain-decomposed Projective Dynamics.”  
+            <a href="https://dl.acm.org/doi/10.1145/3731182">https://dl.acm.org/doi/10.1145/3731182</a>.
+        </li>
+
+        <li>
+            Va, H., Choi, M.-H., & Hong, M. “Real-Time Cloth Simulation Using Compute Shader in Unity3D for AR/VR Contents.” 
+            <em>Applied Sciences</em>, 11, 8255 (2021).  
+            <a href="https://doi.org/10.3390/app11178255">https://doi.org/10.3390/app11178255</a>.  
+            <a href="https://www.mdpi.com/2076-3417/11/17/8255">https://www.mdpi.com/2076-3417/11/17/8255</a>.
+        </li>
+
+        <li>
+            Va, Hongly, Min-Hyung Choi, and Min Hong. 
+            “Parallel Cloth Simulation Using OpenGL Shading Language.” 
+            <em>Computer Systems Science and Engineering</em> 41.2 (2022): 427–443.  
+            <a href="https://graphics.ucdenver.edu/publications/Parallel_cloth_simulation.pdf">
+                https://graphics.ucdenver.edu/publications/Parallel_cloth_simulation.pdf
+            </a>.
+        </li>
+    </ol>
+</section>
+
+
+    <!-- References
+    <section id="references">
+        <h2>References</h2>
+        <ol>
+            <li>
+                Debevec, P., Taylor, C., &amp; Malik, J. “Modeling and Rendering Architecture from Photographs.”
+                <em>Proceedings of SIGGRAPH</em>, 1996.
+            </li>
+            <li>
+                Debevec, P. et al. “View-Dependent Texture Mapping” (SIGGRAPH 1998), for the original view-dependent
+                texture mapping method.
+            </li>
+            <li>
+                Szeliski, R. <em>Computer Vision: Algorithms and Applications</em>. Springer, 2010.
+            </li>
+            <li>
+                OpenGL Tutorial Resources. For example: learnopengl-style documentation on modern OpenGL and GLSL.
+            </li>
+            <li>
+                SIGGRAPH Course Notes on Image-Based Rendering and Projective Texture Mapping.
+            </li>
+        </ol>
+    </section> -->
+
+
+</main>
+
+<footer>
+    <p>&copy; 2025 Aidan Ream and Claire Ogawa. All rights reserved.</p>
+</footer>
+</body>
+</html>

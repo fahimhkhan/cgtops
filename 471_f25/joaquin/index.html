@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Heaven & Hell Minigame – Final Graphics Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #020314;
+      --accent: #ff8ccf;
+      --accent-secondary: #7ee0ff;
+      --text: #f7fafc;
+      --text-muted: #a0aec0;
+      --radius: 18px;
+      --font-body: "DM Sans", sans-serif;
+      --font-display: "Space Grotesk", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% -10%, #312e81 0, transparent 45%),
+        radial-gradient(circle at 90% 120%, #7c2d12 0, transparent 55%),
+        #020314;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    a { color: var(--accent-secondary); }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 16px 70px;
+    }
+
+    header {
+      margin-bottom: 40px;
+      animation: fadeSlideUp 0.8s ease forwards;
+    }
+
+    .course-tag {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-secondary);
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .title-pill {
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .meta-badge {
+      padding: 5px 12px;
+      font-size: 0.85rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(3, 7, 18, 0.92);
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 34px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeSlideUp 0.8s ease forwards;
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* HERO IMAGE */
+    .hero-media img {
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.6);
+      cursor: zoom-in;
+      transition: 0.4s ease;
+    }
+
+    .hero-media img:hover {
+      transform: scale(1.03);
+    }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      cursor: zoom-in;
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .gallery-item img:hover {
+      transform: scale(1.06);
+      filter: brightness(1.18) saturate(1.2);
+    }
+
+    /* VIDEO */
+    .video-wrapper {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.6);
+    }
+
+    .video-aspect {
+      position: relative;
+      padding-top: 56.25%;
+    }
+
+    .video-aspect iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Fade + Slide Animation */
+    @keyframes fadeSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* LIGHTBOX */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .lightbox-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-overlay img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.8);
+      border: 1px solid rgba(255,255,255,0.3);
+      animation: zoomIn 0.25s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+<header>
+  <div class="course-tag">CSC 471 – Final Graphics Project</div>
+
+  <div class="project-title">
+    Heaven &amp; Hell Minigame
+    <span class="title-pill">Documentation</span>
+  </div>
+
+  <div class="meta-row">
+    <span class="meta-badge">Joaquin Anthony Arredondo</span>
+    <span class="meta-badge">jarred10</span>
+    <span class="meta-badge">Senior • Fall 2026</span>
+    <span class="meta-badge">Instructor: Dr. Fahim Khan</span>
+  </div>
+
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#tech">Graphics Tech</a>
+    <a href="#results">Results</a>
+    <a href="#video">Video</a>
+    <a href="#resources">Resources</a>
+  </nav>
+</header>
+
+
+<!-- OVERVIEW -->
+<section id="overview" class="card">
+  <div class="card-title">Project Overview</div>
+
+  <div class="hero-media">
+    <img src="images/hellimage0.png" alt="Hell Minigame Screenshot" onclick="openLightbox(this.src)" />
+  </div>
+
+  <p>
+    <strong>Heaven &amp; Hell Minigame</strong> is an OpenGL-based action game in which the player
+    begins in a peaceful heaven setting, ascends a staircase, and enters a portal that transforms the
+    world into a fiery hell arena filled with demons.
+  </p>
+
+  <p>
+    Your mission is to defeat the smaller flocking demons before facing the main demon, using a
+    throwable magical staff. This project integrates lighting, shading, hierarchical animation,
+    particle effects, collision detection, flocking AI, and real-time audio.
+  </p>
+</section>
+
+
+<!-- TECH -->
+<section id="tech" class="card">
+  <div class="card-title">Graphics Technologies Used</div>
+
+  <ul>
+    <li>Blinn–Phong shading</li>
+    <li>Material system (ambient, diffuse, specular)</li>
+    <li>Texture-mapped shaders + dynamic skyboxes</li>
+    <li>Particle effects (fire, smoke, ash)</li>
+    <li>Boid system (leader–follower demon flocking)</li>
+    <li>Hierarchical modeling for animated demons</li>
+    <li>Spline-based cinematic camera</li>
+    <li>Projectile system + hit detection</li>
+    <li>FMOD audio system (SFX + music)</li>
+    <li>WASD + mouse-look free camera</li>
+  </ul>
+</section>
+
+
+<!-- RESULTS -->
+<section id="results" class="card">
+  <div class="card-title">Visual Results</div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="images/hellimage1.png" alt="Hell Scene 1" onclick="openLightbox(this.src)" />
+    </div>
+    <div class="gallery-item">
+      <img src="images/hellimage3.png" alt="Hell Scene 2" onclick="openLightbox(this.src)" />
+    </div>
+    <div class="gallery-item">
+      <img src="images/hellimage4.png" alt="Hell Scene 3" onclick="openLightbox(this.src)" />
+    </div>
+  </div>
+</section>
+
+
+<!-- VIDEO -->
+<section id="video" class="card">
+  <div class="card-title">Gameplay Video</div>
+
+  <div class="video-wrapper">
+    <div class="video-aspect">
+      <iframe
+        src="https://www.youtube.com/embed/ZJD7Yyqc9oY"
+        title="Heaven and Hell Gameplay Demo"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+
+<!-- RESOURCES -->
+<section id="resources" class="card">
+  <div class="card-title">Resources</div>
+
+  <ul>
+    <li>OpenGL, GLSL, GLM, GLFW</li>
+    <li>FMOD / cmod audio library</li>
+    <li>tinyobjloader for OBJ models</li>
+    <li>Sketchfab, TurboSquid, CGTrader – free 3D assets</li>
+    <li>Pixabay – free SFX & music</li>
+    <li>Processing Flocking Example (boid inspiration)</li>
+  </ul>
+</section>
+
+
+<footer>
+  <span>&copy; <span id="year"></span> Joaquin Anthony Arredondo</span>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox-overlay" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+
+<!-- Scripts -->
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Lightbox functionality
+  function openLightbox(src) {
+    const lightbox = document.getElementById("lightbox");
+    const img = document.getElementById("lightbox-img");
+    img.src = src;
+    lightbox.classList.add("visible");
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById("lightbox");
+    lightbox.classList.remove("visible");
+    document.getElementById("lightbox-img").src = "";
+  }
+</script>
+
+</div>
+</body>
+</html>
